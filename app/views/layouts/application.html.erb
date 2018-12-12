@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OauthProviderRails5</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if current_user %>
+      <%= link_to "LogOut",destroy_user_session_path,:method => :delete %>
+      <%= link_to "Client Applications", oauth_applications_path,:target => "_blank" %>
+    <% else %>
+      <%= link_to "Login",new_user_session_path %>
+    <% end %>  
+    <%= yield %>
+  </body>
+</html>
