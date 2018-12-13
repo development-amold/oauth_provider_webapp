@@ -10,12 +10,20 @@
   </head>
 
   <body>
+    <% flash.each do |name, message| %>
+      <div class="alert alert-<%= name %> alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <%= message %>
+      </div>
+    <% end %> 
+    <hr>
     <% if current_user %>
-      <%= link_to "LogOut",destroy_user_session_path,:method => :delete %>
-      <%= link_to "Client Applications", oauth_applications_path,:target => "_blank" %>
+      <%= link_to "LogOut",destroy_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <%= link_to "Client Applications", oauth_applications_path %>
     <% else %>
       <%= link_to "Login",new_user_session_path %>
     <% end %>  
+    <hr>
     <%= yield %>
   </body>
 </html>

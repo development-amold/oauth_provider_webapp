@@ -8,7 +8,10 @@ Doorkeeper.configure do
     # Put your resource owner authentication logic here.
     # Example implementation:
       # User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
-    current_user || redirect_to(new_user_session_url)
+      puts "==PARAMS==#{request.params}======="
+    # current_user || redirect_to(new_user_session_url+"?continue"+request.params)
+    current_user || redirect_to("#{new_user_session_url}?#{request.params.to_query}")
+
     # request.env['warden'].user || User.where(email: request.params[:email]).first
     # User.find_by_id(session[:email]) || warden_authenticate!(scope: :user)
   end
@@ -26,7 +29,10 @@ Doorkeeper.configure do
     # Example implementation:
   
     if current_user #current_user
-      head :forbidden unless current_user.email == "amol@amol.com"
+      # head :forbidden unless current_user.email == "amol@amol.com"
+      unless current_user.email == "amol@amol.com"
+        redirect_to root_path, notice: "You don't have authorisation to view this page."
+      end
     else
       redirect_to new_user_session_url
     end
