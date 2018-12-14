@@ -10,7 +10,7 @@ Doorkeeper.configure do
       # User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
       puts "==PARAMS==#{request.params}======="
     # current_user || redirect_to(new_user_session_url+"?continue"+request.params)
-    current_user || redirect_to("#{new_user_session_url}?#{request.params.to_query}")
+    current_user || redirect_to("#{new_user_session_url}?#{request.params.reject! { |k| k == "action" || k== "controller" }.to_query   }")
 
     # request.env['warden'].user || User.where(email: request.params[:email]).first
     # User.find_by_id(session[:email]) || warden_authenticate!(scope: :user)

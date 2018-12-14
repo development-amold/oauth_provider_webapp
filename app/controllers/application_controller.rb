@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-	
+	# before_action :configure_permitted_parameters, if: :devise_controller?
+
   	
 
   # GET /me.json
@@ -16,16 +17,9 @@ class ApplicationController < ActionController::Base
     User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
   end
 
-  # protected
+  protected
     def after_sign_in_path_for(resource)
-      unless cookies.signed[:continue].blank?
-        @store_cookie = cookies.signed[:continue]
-        cookies.delete :continue
-        oauth_authorization_path @store_cookie
-      else
-        super  
-      end
-      # cookies.signed[:continue] || stored_location_for(resource) || root_path
+      super
     end
 
 end
